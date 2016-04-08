@@ -1,6 +1,6 @@
 var app = angular.module('simplytravel.services', []);
 
-app.service("SimplyService", function ($q, $http) {
+app.service("SimplyService", function ($q, $http, md5) {
 	var self = {
 		'page': 1,
 		'isLoading': false,
@@ -29,9 +29,16 @@ app.service("SimplyService", function ($q, $http) {
 				lon: self.lon
 			};
 
-			$http.get('https://codecraftpro.com/api/samples/v1/coffee/', {
-					params: params
-				})
+			var apiKey = '3c9ab61ub6ne8kfjg91mos7kbo';
+			var secret = '7rap22atrokko';
+			var ts = Math.floor(Date.now() / 1000); // 1427233130 (Tue, 24 Mar 2015 21:38:50 +0000)
+			var sig = md5.createHash(apiKey + secret + ts);
+			console.log(sig);
+			console.log(ts);
+			var ip = "168.167.113.26";
+			var userAgent = 'Mozilla/5.0';
+			var eanAPI = "http://api.ean.com/ean-services/rs/hotel/v3/list?cid=389950&apiKey=3c9ab61ub6ne8kfjg91mos7kbo&sig=" + sig + "&minorRev=99&customerUserAgent=" + userAgent + "&customerIpAddress=" + ip + "&locale=en_US&currencyCode=USD&city=Seattle&stateProvinceCode=WA&countryCode=US&&hotelId=201252";
+			$http.get(eanAPI)
 				.success(function (data) {
 					self.isLoading = false;
 					console.log(data);

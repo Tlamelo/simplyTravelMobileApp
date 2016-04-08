@@ -1,5 +1,6 @@
 var app = angular.module('simplytravel', [
 	'ionic',
+	'angular-md5',
 	'simplytravel.controllers',
 	'simplytravel.services',
 	'simplytravel.filters'
@@ -21,6 +22,6 @@ app.run(function ($ionicPlatform) {
 	});
 });
 
-app.config(function ($httpProvider) {
+/*app.config(function ($httpProvider) {
 	$httpProvider.defaults.headers.common['Authorization'] = 'Token <REPLACE_WITH_YOUR_TOKEN>';
-});
+});*/
