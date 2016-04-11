@@ -1,5 +1,6 @@
 var app = angular.module('simplytravel', [
 	'ionic',
+    'ngCordova',
 	'angular-md5',
 	'simplytravel.controllers',
 	'simplytravel.services',

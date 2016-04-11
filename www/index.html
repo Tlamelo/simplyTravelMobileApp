@@ -17,7 +17,8 @@
 	<script src="lib/ionic/js/ionic.bundle.js"></script>
 
 	<!-- cordova script (this will be a 404 during development) -->
-	<script src="cordova.js"></script>
+	<script src="lib/ngCordova/dist/ng-cordova.js"></script>
+    <script src="cordova.js"></script>
 
 	<!-- your apps js -->
 	<script src="js/app.js"></script>
@@ -37,31 +38,45 @@
 		</h1 >
 	</ion-header-bar >
 	<ion-content >
-		<!--<ion-list >
+        <ion-refresher
+          pulling-text="Refress.."
+          on-refresh="doRefresh()">
+        </ion-refresher>
+		<ion-list >
 			<ion-item ng-repeat="hotel in simply.results"
-			          class="item-thumbnail-left" >
-				<img ng-src="{{cafe.image_url}}" >
-				<h2 >{{cafe.name}}</h2 >
+			          class="item-thumbnail-left" 
+                      ng-click="openMap(hotel)">
+				<img ng-src="http://images.travelnow.com{{hotel.thumbNailUrl}}" >
+				<h2 >{{hotel.name}}</h2 >
 
 				<p >
 					<span >
 						<i class="ion ion-ios-navigate" ></i >
-						{{cafe.distance | number:"0"}}m</span >
+						{{hotel.proximityDistance | number:"0"}}km</span >
 				</p >
 				<p >
 					<i class="ion ion-ios-location" ></i >
-					{{cafe.location.display_address }}
+					{{hotel.address1 }}
 				</p >
 				<p >
 					<span >
 						<i class="ion ion-star" ></i >
-						{{cafe.rating}}</span >
+						{{hotel.hotelRating}}</span >
 					<span >
-						<i class="ion ion-person" ></i >
-						{{cafe.review_count}}</span >
+						<i class="ion ion-social-usd" ></i >
+						{{hotel.lowRate}} Avg. Nightly Rate from</span >
 				</p >
+                <ion-option-button class="button-positive"
+                    ng-click="getDirections(hotel)">
+                    <i class="ion ion-map"></i>&nbsp;Directions
+                </ion-option-button>
 			</ion-item >
-		</ion-list >-->
+		</ion-list >
+        <ion-infinite-scroll
+          ng-if="simply.hasMore"
+          immediate-check="false"
+          on-infinite="loadMore()">
+        </ion-infinite-scroll> 
 	</ion-content >
 </ion-pane >
 </body >
